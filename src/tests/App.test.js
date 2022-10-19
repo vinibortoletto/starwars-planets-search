@@ -5,8 +5,8 @@ import App from '../App';
 
 const ENDPOINT = 'https://swapi.dev/api/planets'
 
-describe('App', () => {
-  it.skip('1. should call api on mount', () => {
+describe.skip('App', () => {
+  it('1. should call api on mount', () => {
     global.fetch = jest.fn(async () => Promise.resolve({
       json: async () => Promise.resolve(PLANETS_MOCK)
     }))

@@ -2,12 +2,25 @@ import React, { useContext } from 'react';
 import { PlanetsContext } from './PlanetsContext';
 
 export default function Table() {
-  const { planetsList } = useContext(PlanetsContext);
+  const { filteredPlanetsList } = useContext(PlanetsContext);
 
-  const tableHeads = Object.keys(planetsList[0])
-    .map((head) => (<th key={ head }>{head}</th>));
+  const tableHeads = [
+    'name',
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'climate',
+    'gravity',
+    'terrain',
+    'surface_water',
+    'population',
+    'films',
+    'created',
+    'edited',
+    'url',
+  ];
 
-  const tableContent = planetsList.map((planet) => {
+  const tableContent = filteredPlanetsList.map((planet) => {
     const planetInfos = Object.values(planet);
 
     return (
@@ -23,7 +36,9 @@ export default function Table() {
     <table>
       <thead>
         <tr>
-          {tableHeads}
+          {tableHeads.map((head) => (
+            <th key={ head }>{head}</th>
+          ))}
         </tr>
       </thead>
 
