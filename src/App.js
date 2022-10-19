@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './App.css';
+import { PlanetsContext } from './components/PlanetsContext';
+import Table from './components/Table';
 
 function App() {
+  const { isLoading } = useContext(PlanetsContext);
+
   return (
-    <span>Hello, App!</span>
+    <div>
+      {isLoading ? <div>Loading...</div> : <Table />}
+    </div>
   );
 }
-
-// initial commit
 
 export default App;
