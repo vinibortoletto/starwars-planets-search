@@ -5,9 +5,9 @@ import getPlanets from '../services/planetsApi';
 export const PlanetsContext = createContext();
 
 export function PlanetsProvider({ children }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [planetsList, setPlanetsList] = useState([]);
   const [filteredPlanetsList, setFilteredPlanetsList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [nameFilter, setNameFilter] = useState('');
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export function PlanetsProvider({ children }) {
     fetchData();
   }, []);
 
-  const filterPlanetsByText = useCallback(({ target: { value } }) => {
+  const filterPlanetsByName = useCallback(({ target: { value } }) => {
     const newFilteredPlanetsList = planetsList
       .filter((planet) => planet.name.toLowerCase().includes(value));
 
@@ -32,16 +32,40 @@ export function PlanetsProvider({ children }) {
     setNameFilter(value);
   }, [planetsList]);
 
+  const filterPlanetsByNumber = useCallback((
+    columnFilter,
+    comparisonFilter,
+    valueFilter,
+  ) => {
+    const newFilteredPlanetsList = planetsList
+      .filter((planet) => {
+        switch (comparisonFilter) {
+        case 'maior que':
+          return planet[columnFilter] > Number(valueFilter);
+        case 'menor que':
+          return planet[columnFilter] < Number(valueFilter);
+        case 'igual a':
+          return planet[columnFilter] === valueFilter;
+        default:
+          return planet;
+        }
+      });
+
+    setFilteredPlanetsList(newFilteredPlanetsList);
+  }, [planetsList]);
+
   const value = useMemo(() => ({
-    filteredPlanetsList,
     isLoading,
-    filterPlanetsByText,
+    filteredPlanetsList,
+    filterPlanetsByName,
+    filterPlanetsByNumber,
     nameFilter,
     setNameFilter,
   }), [
-    filteredPlanetsList,
     isLoading,
-    filterPlanetsByText,
+    filteredPlanetsList,
+    filterPlanetsByName,
+    filterPlanetsByNumber,
     nameFilter,
     setNameFilter,
   ]);

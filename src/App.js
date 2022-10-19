@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
-import './App.css';
-import Form from './components/Form';
-import { PlanetsContext } from './components/PlanetsContext';
+
+import { PlanetsContext } from './contexts/PlanetsContext';
+import FilterPlanets from './components/FilterPlanets';
+import SearchPlanets from './components/SearchPlanets';
 import Table from './components/Table';
+
+import './App.css';
 
 function App() {
   const { isLoading } = useContext(PlanetsContext);
@@ -13,7 +16,8 @@ function App() {
         ? <div>Loading...</div>
         : (
           <main>
-            <Form />
+            <SearchPlanets />
+            <FilterPlanets />
             <Table />
           </main>
         )}
