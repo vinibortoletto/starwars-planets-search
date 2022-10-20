@@ -1,23 +1,59 @@
 import React, { useContext, useState } from 'react';
 import { PlanetsContext } from '../contexts/PlanetsContext';
 
+const INITIAL_COLUMN_FILTER_LIST = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
 export default function FilterPlanets() {
   const {
     filterPlanetsByNumber,
   } = useContext(PlanetsContext);
 
+  const [columnFilterList, setColumnFilterList] = useState([
+    ...INITIAL_COLUMN_FILTER_LIST,
+  ]);
   const [columnFilter, setColumnFilter] = useState('population');
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('0');
+  const [filtersList, setFiltersList] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    filterPlanetsByNumber(columnFilter, comparisonFilter, valueFilter);
+
+    if (columnFilterList.length === 0) return;
+
+    const newFiltersList = [
+      ...filtersList,
+      {
+        column: columnFilter,
+        comparison: comparisonFilter,
+        value: valueFilter,
+      },
+    ];
+
+    filterPlanetsByNumber(newFiltersList);
+    setFiltersList(newFiltersList);
+
+    const newColumnFilterList = columnFilterList
+      .filter((filter) => filter !== columnFilter);
+    setColumnFilterList(newColumnFilterList);
+    setColumnFilter(newColumnFilterList[0]);
+  };
+
+  const removeFilter = (column) => {
+    const newFiltersList = filtersList.filter((filter) => filter.column !== column);
+    setFiltersList(newFiltersList);
+    setColumnFilterList([...columnFilterList, column]);
+    filterPlanetsByNumber(newFiltersList);
   };
 
   return (
-    <form onSubmit={ handleSubmit }>
-      <div>
+    <>
+      <form onSubmit={ handleSubmit }>
         <label htmlFor="column-filter">
           <select
             name="column-filter"
@@ -26,11 +62,9 @@ export default function FilterPlanets() {
             value={ columnFilter }
             onChange={ (event) => setColumnFilter(event.target.value) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {columnFilterList.map((filter) => (
+              <option key={ filter } value={ filter }>{filter}</option>
+            ))}
           </select>
         </label>
 
@@ -61,10 +95,31 @@ export default function FilterPlanets() {
         <button
           type="submit"
           data-testid="button-filter"
+          disabled={ columnFilterList.length === 0 }
         >
           Filtrar
         </button>
-      </div>
-    </form>
+      </form>
+
+      <ul>
+        {filtersList.map((filter) => (
+          <li key={ filter.column }>
+            <p>
+              {`
+                ${filter.column} 
+                ${filter.comparison} 
+                ${filter.value}
+             `}
+            </p>
+            <button
+              type="button"
+              onClick={ () => removeFilter(filter.column) }
+            >
+              Remover
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }

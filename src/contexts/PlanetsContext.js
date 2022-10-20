@@ -33,26 +33,27 @@ export function PlanetsProvider({ children }) {
   }, [planetsList]);
 
   const filterPlanetsByNumber = useCallback((
-    columnFilter,
-    comparisonFilter,
-    valueFilter,
+    filtersList,
   ) => {
-    const newFilteredPlanetsList = planetsList
-      .filter((planet) => {
-        switch (comparisonFilter) {
-        case 'maior que':
-          return planet[columnFilter] > Number(valueFilter);
-        case 'menor que':
-          return planet[columnFilter] < Number(valueFilter);
-        case 'igual a':
-          return planet[columnFilter] === valueFilter;
-        default:
-          return planet;
-        }
-      });
+    if (filtersList.length === 0) return setFilteredPlanetsList(planetsList);
+
+    const newFilteredPlanetsList = filtersList
+      .reduce((_, filter) => filteredPlanetsList
+        .filter((planet) => {
+          switch (filter.comparison) {
+          case 'maior que':
+            return Number(planet[filter.column]) > Number(filter.value);
+          case 'menor que':
+            return Number(planet[filter.column]) < Number(filter.value);
+          case 'igual a':
+            return Number(planet[filter.column]) === Number(filter.value);
+          default:
+            return planet;
+          }
+        }), []);
 
     setFilteredPlanetsList(newFilteredPlanetsList);
-  }, [planetsList]);
+  }, [filteredPlanetsList, planetsList]);
 
   const value = useMemo(() => ({
     isLoading,
