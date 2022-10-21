@@ -45,9 +45,16 @@ export default function FilterPlanets() {
     const newFiltersList = filtersList.filter(
       (filter) => filter.column !== column,
     );
+
     setFiltersList(newFiltersList);
     setColumnFilterList([...columnFilterList, column]);
     filterPlanetsByNumber(newFiltersList);
+  };
+
+  const removeAllFilters = () => {
+    setFiltersList([]);
+    setColumnFilterList([...INITIAL_COLUMN_FILTER_LIST]);
+    filterPlanetsByNumber([]);
   };
 
   return (
@@ -101,6 +108,18 @@ export default function FilterPlanets() {
           Filtrar
         </button>
       </form>
+
+      {
+        filtersList.length > 0 && (
+          <button
+            type="button"
+            data-testid="button-remove-filters"
+            onClick={ removeAllFilters }
+          >
+            Remover todas filtragens
+          </button>
+        )
+      }
 
       <ul>
         {filtersList.map((filter) => (

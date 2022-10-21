@@ -32,28 +32,27 @@ export function PlanetsProvider({ children }) {
     setNameFilter(value);
   }, [planetsList]);
 
-  const filterPlanetsByNumber = useCallback((
-    filtersList,
-  ) => {
+  const filterPlanetsByNumber = useCallback((filtersList) => {
     if (filtersList.length === 0) return setFilteredPlanetsList(planetsList);
 
     const newFilteredPlanetsList = filtersList
-      .reduce((_, filter) => filteredPlanetsList
-        .filter((planet) => {
+      .reduce((acc, filter) => {
+        const newAcc = acc.length > 0 ? acc : planetsList;
+
+        return newAcc.filter((planet) => {
           switch (filter.comparison) {
           case 'maior que':
             return Number(planet[filter.column]) > Number(filter.value);
           case 'menor que':
             return Number(planet[filter.column]) < Number(filter.value);
-          case 'igual a':
-            return Number(planet[filter.column]) === Number(filter.value);
           default:
-            return planet;
+            return Number(planet[filter.column]) === Number(filter.value);
           }
-        }), []);
+        });
+      }, []);
 
     setFilteredPlanetsList(newFilteredPlanetsList);
-  }, [filteredPlanetsList, planetsList]);
+  }, [planetsList]);
 
   const value = useMemo(() => ({
     isLoading,
