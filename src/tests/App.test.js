@@ -100,7 +100,7 @@ describe("App", () => {
     expect(button.disabled).toBe(false);
   });
 
-  it.only("8. should be able to add multiple filters", () => {
+  it("8. should be able to add multiple filters", () => {
     const columnField = screen.getByTestId("column-filter");
     const comparisonField = screen.getByTestId("comparison-filter");
     const valueField = screen.getByTestId("value-filter");
@@ -111,21 +111,15 @@ describe("App", () => {
 
     userEvent.selectOptions(columnField, "orbital_period");
     userEvent.selectOptions(comparisonField, "menor que");
-    userEvent.type(valueField, "400");
+    userEvent.type(valueField, "{selectall}{del}400");
     userEvent.click(filterButton);
     expect(screen.getAllByTestId("tbody").length).toBe(4);
 
     userEvent.selectOptions(columnField, "diameter");
     userEvent.selectOptions(comparisonField, "igual a");
-    userEvent.type(valueField, "10465");
+    userEvent.type(valueField, "{selectall}{del}10465");
     userEvent.click(filterButton);
-
-    // expect(screen.getAllByTestId("tbody").length).toBe(1);
-
-    // expect(screen.getByText("Endor")).toBeInTheDocument();
-
-    // const filtersList = screen.getAllByTestId("filter");
-    // expect(filtersList.length).toBe(3);
+    expect(screen.getAllByTestId("tbody").length).toBe(1);
   });
 
   it('9. should be able to remove a filter', () => {
@@ -137,6 +131,13 @@ describe("App", () => {
     userEvent.click(screen.getAllByTestId('remove-filter-btn')[0]);
     expect(screen.getAllByTestId("filter").length).toBe(1);
     userEvent.click(screen.getAllByTestId('remove-filter-btn')[0]);
+    expect(screen.queryAllByTestId("filter").length).toBe(0);
+  });
+
+  it('10. should be able to remove all filters at once', () => {
+    userEvent.click(screen.getByTestId("button-filter"));
+    userEvent.click(screen.getByTestId("button-filter"));
+    userEvent.click(screen.getByTestId('button-remove-filters'))
     expect(screen.queryAllByTestId("filter").length).toBe(0);
   });
 });
