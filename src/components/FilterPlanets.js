@@ -9,9 +9,7 @@ const INITIAL_COLUMN_FILTER_LIST = [
   'surface_water',
 ];
 export default function FilterPlanets() {
-  const {
-    filterPlanetsByNumber,
-  } = useContext(PlanetsContext);
+  const { filterPlanetsByNumber } = useContext(PlanetsContext);
 
   const [columnFilterList, setColumnFilterList] = useState([
     ...INITIAL_COLUMN_FILTER_LIST,
@@ -23,8 +21,6 @@ export default function FilterPlanets() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (columnFilterList.length === 0) return;
 
     const newFiltersList = [
       ...filtersList,
@@ -38,14 +34,17 @@ export default function FilterPlanets() {
     filterPlanetsByNumber(newFiltersList);
     setFiltersList(newFiltersList);
 
-    const newColumnFilterList = columnFilterList
-      .filter((filter) => filter !== columnFilter);
+    const newColumnFilterList = columnFilterList.filter(
+      (filter) => filter !== columnFilter,
+    );
     setColumnFilterList(newColumnFilterList);
     setColumnFilter(newColumnFilterList[0]);
   };
 
   const removeFilter = (column) => {
-    const newFiltersList = filtersList.filter((filter) => filter.column !== column);
+    const newFiltersList = filtersList.filter(
+      (filter) => filter.column !== column,
+    );
     setFiltersList(newFiltersList);
     setColumnFilterList([...columnFilterList, column]);
     filterPlanetsByNumber(newFiltersList);
@@ -63,7 +62,9 @@ export default function FilterPlanets() {
             onChange={ (event) => setColumnFilter(event.target.value) }
           >
             {columnFilterList.map((filter) => (
-              <option key={ filter } value={ filter }>{filter}</option>
+              <option key={ filter } value={ filter }>
+                {filter}
+              </option>
             ))}
           </select>
         </label>
@@ -103,7 +104,7 @@ export default function FilterPlanets() {
 
       <ul>
         {filtersList.map((filter) => (
-          <li key={ filter.column }>
+          <li key={ filter.column } data-testid="filter">
             <p>
               {`
                 ${filter.column} 
@@ -112,6 +113,7 @@ export default function FilterPlanets() {
              `}
             </p>
             <button
+              data-testid="remove-filter-btn"
               type="button"
               onClick={ () => removeFilter(filter.column) }
             >

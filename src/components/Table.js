@@ -24,7 +24,7 @@ export default function Table() {
     const planetInfos = Object.values(planet);
 
     return (
-      <tr key={ planet.name }>
+      <tr key={ planet.name } data-testid="tbody">
         {planetInfos.map((info, index) => (
           <td key={ index }>{info}</td>
         ))}
@@ -37,7 +37,7 @@ export default function Table() {
       <thead>
         <tr>
           {tableHeads.map((head) => (
-            <th key={ head }>{head}</th>
+            <th key={ head } data-testid="thead">{head}</th>
           ))}
         </tr>
       </thead>
