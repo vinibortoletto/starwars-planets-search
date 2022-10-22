@@ -1,4 +1,8 @@
-body {
-  background-color: #212121;
-  color: white;
-}
+/* stylelint-disable at-rule-semicolon-space-before */
+
+/* stylelint-disable at-rule-no-unknown */
+
+/* stylelint-disable at-rule-empty-line-before */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
