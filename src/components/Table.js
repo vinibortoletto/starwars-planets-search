@@ -26,7 +26,12 @@ export default function Table() {
     return (
       <tr key={ planet.name } data-testid="tbody">
         {planetInfos.map((info, index) => (
-          <td key={ index }>{info}</td>
+          <td
+            key={ index }
+            data-testid={ info === planet.name ? 'planet-name' : '' }
+          >
+            {info}
+          </td>
         ))}
       </tr>
     );

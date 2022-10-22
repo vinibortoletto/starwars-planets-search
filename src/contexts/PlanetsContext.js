@@ -57,6 +57,7 @@ export function PlanetsProvider({ children }) {
   const value = useMemo(() => ({
     isLoading,
     filteredPlanetsList,
+    setFilteredPlanetsList,
     filterPlanetsByName,
     filterPlanetsByNumber,
     nameFilter,
@@ -64,6 +65,7 @@ export function PlanetsProvider({ children }) {
   }), [
     isLoading,
     filteredPlanetsList,
+    setFilteredPlanetsList,
     filterPlanetsByName,
     filterPlanetsByNumber,
     nameFilter,

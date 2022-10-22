@@ -8,6 +8,7 @@ const INITIAL_COLUMN_FILTER_LIST = [
   'rotation_period',
   'surface_water',
 ];
+
 export default function FilterPlanets() {
   const { filterPlanetsByNumber } = useContext(PlanetsContext);
 

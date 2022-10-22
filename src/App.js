@@ -6,6 +6,7 @@ import SearchPlanets from './components/SearchPlanets';
 import Table from './components/Table';
 
 import './App.css';
+import SortPlanets from './components/SortPlanets';
 
 function App() {
   const { isLoading } = useContext(PlanetsContext);
@@ -18,6 +19,7 @@ function App() {
           <main>
             <SearchPlanets />
             <FilterPlanets />
+            <SortPlanets />
             <Table />
           </main>
         )}
