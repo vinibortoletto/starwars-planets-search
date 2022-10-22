@@ -122,22 +122,53 @@ describe("App", () => {
     expect(screen.getAllByTestId("tbody").length).toBe(1);
   });
 
-  it('9. should be able to remove a filter', () => {
+  it("9. should be able to remove a filter", () => {
     userEvent.click(screen.getByTestId("button-filter"));
     userEvent.click(screen.getByTestId("button-filter"));
 
     expect(screen.getAllByTestId("filter").length).toBe(2);
 
-    userEvent.click(screen.getAllByTestId('remove-filter-btn')[0]);
+    userEvent.click(screen.getAllByTestId("remove-filter-btn")[0]);
     expect(screen.getAllByTestId("filter").length).toBe(1);
-    userEvent.click(screen.getAllByTestId('remove-filter-btn')[0]);
+    userEvent.click(screen.getAllByTestId("remove-filter-btn")[0]);
     expect(screen.queryAllByTestId("filter").length).toBe(0);
   });
 
-  it('10. should be able to remove all filters at once', () => {
+  it("10. should be able to remove all filters at once", () => {
     userEvent.click(screen.getByTestId("button-filter"));
     userEvent.click(screen.getByTestId("button-filter"));
-    userEvent.click(screen.getByTestId('button-remove-filters'))
+    userEvent.click(screen.getByTestId("button-remove-filters"));
     expect(screen.queryAllByTestId("filter").length).toBe(0);
+  });
+
+  it("11. should render column sort field", () => {
+    expect(screen.getByTestId("column-sort")).toBeInTheDocument();
+    expect(screen.getByTestId("column-sort").type).toBe("select-one");
+    expect(screen.getByTestId("column-sort").value).toBe("population");
+  });
+
+  it("12. should render ascending/descending radio input", () => {
+    expect(screen.getByTestId("column-sort-input-asc")).toBeInTheDocument();
+    expect(screen.getByTestId("column-sort-input-asc").type).toBe("radio");
+    expect(screen.getByTestId("column-sort-input-asc").value).toBe("ASC");
+    expect(screen.getByTestId("column-sort-input-asc").checked).toBe(true);
+
+    expect(screen.getByTestId("column-sort-input-desc")).toBeInTheDocument();
+    expect(screen.getByTestId("column-sort-input-desc").type).toBe("radio");
+    expect(screen.getByTestId("column-sort-input-desc").value).toBe("DESC");
+    expect(screen.getByTestId("column-sort-input-desc").checked).toBe(false);
+  });
+
+  it("13. should be able to sort planets based on selected column", () => {
+    userEvent.selectOptions(screen.getByTestId("column-sort"), "diameter");
+    userEvent.click(screen.getByTestId("column-sort-input-desc"));
+    userEvent.click(screen.getByTestId("column-sort-button"));
+    expect(screen.getAllByTestId("planet-name")[0].innerHTML).toBe("Bespin");
+
+    userEvent.click(screen.getByTestId("column-sort-input-asc"))
+    userEvent.selectOptions(screen.getByTestId("column-sort"), "population");
+    userEvent.click(screen.getByTestId("column-sort-button"));
+    expect(screen.getAllByTestId("planet-name")[0].innerHTML).toBe("Yavin IV");
+    expect(screen.getAllByTestId("planet-name").slice(-1)[0].innerHTML).toBe('Hoth')
   });
 });
