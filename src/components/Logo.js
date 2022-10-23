@@ -3,7 +3,7 @@ import starwarsLogo from '../assets/starwars-logo.png';
 
 export default function Logo() {
   return (
-    <div className="h-screen relative max-w-md mx-auto">
+    <div className="max-w-md mx-auto">
       <img
         src={ starwarsLogo }
         alt="starwars logo"

@@ -24,11 +24,17 @@ export default function Table() {
     const planetInfos = Object.values(planet);
 
     return (
-      <tr key={ planet.name } data-testid="tbody">
+      <tr
+        key={ planet.name }
+        data-testid="tbody"
+        className=" even:bg-zinc-400/10 odd:bg-zinc-600/10
+         hover:bg-zinc-500/20 transition"
+      >
         {planetInfos.map((info, index) => (
           <td
             key={ index }
             data-testid={ info === planet.name ? 'planet-name' : '' }
+            className="p-4"
           >
             {info}
           </td>
@@ -38,18 +44,27 @@ export default function Table() {
   });
 
   return (
-    <table>
-      <thead>
-        <tr>
-          {tableHeads.map((head) => (
-            <th key={ head } data-testid="thead">{head}</th>
-          ))}
-        </tr>
-      </thead>
+    <div className="overflow-x-auto border border-zinc-600">
+      <table className="table-fixed">
+        <thead>
+          <tr>
+            {tableHeads.map((head) => (
+              <th
+                key={ head }
+                data-testid="thead"
+                className="bg-zinc-800 p-4"
+              >
+                {head}
 
-      <tbody>
-        {tableContent}
-      </tbody>
-    </table>
+              </th>
+            ))}
+          </tr>
+        </thead>
+
+        <tbody>
+          {tableContent}
+        </tbody>
+      </table>
+    </div>
   );
 }
