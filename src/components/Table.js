@@ -44,7 +44,7 @@ export default function Table() {
   });
 
   return (
-    <div className="overflow-x-auto border border-zinc-600">
+    <div className="min-h-[20rem] overflow-x-auto border border-zinc-600">
       <table className="table-fixed">
         <thead>
           <tr>
