@@ -7,6 +7,8 @@ import Table from './components/Table';
 
 import './App.css';
 import SortPlanets from './components/SortPlanets';
+import Loading from './components/Loading';
+import Logo from './components/Logo';
 
 function App() {
   const { isLoading } = useContext(PlanetsContext);
@@ -14,13 +16,17 @@ function App() {
   return (
     <div>
       {isLoading
-        ? <div>Loading...</div>
+        ? <Loading />
         : (
           <main>
-            <SearchPlanets />
-            <FilterPlanets />
-            <SortPlanets />
-            <Table />
+            <Logo />
+
+            <div className="content">
+              <SearchPlanets />
+              <FilterPlanets />
+              <SortPlanets />
+              <Table />
+            </div>
           </main>
         )}
     </div>

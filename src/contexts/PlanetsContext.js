@@ -4,6 +4,8 @@ import getPlanets from '../services/planetsApi';
 
 export const PlanetsContext = createContext();
 
+const ONE_SEC = 1000;
+
 export function PlanetsProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [planetsList, setPlanetsList] = useState([]);
@@ -18,7 +20,7 @@ export function PlanetsProvider({ children }) {
       setPlanetsList(planets);
       setFilteredPlanetsList(planets);
 
-      setIsLoading(false);
+      setTimeout(() => setIsLoading(false), ONE_SEC);
     };
 
     fetchData();
