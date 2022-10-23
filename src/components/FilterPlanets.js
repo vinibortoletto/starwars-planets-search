@@ -1,4 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { AiFillDelete } from 'react-icons/ai';
+import { ImCross } from 'react-icons/im';
+
 import { PlanetsContext } from '../contexts/PlanetsContext';
 
 const INITIAL_COLUMN_FILTER_LIST = [
@@ -59,8 +62,15 @@ export default function FilterPlanets() {
   };
 
   return (
-    <>
-      <form onSubmit={ handleSubmit }>
+    <div className="mb-10">
+      <form
+        onSubmit={ handleSubmit }
+        className="flex flex-col flex-wrap gap-4 md:flex-row justify-center"
+      >
+        <h2 className="w-full font-bold text-amber-500 text-lg text-center">
+          Filtre por valores
+        </h2>
+
         <label htmlFor="column-filter">
           <select
             name="column-filter"
@@ -68,9 +78,14 @@ export default function FilterPlanets() {
             data-testid="column-filter"
             value={ columnFilter }
             onChange={ (event) => setColumnFilter(event.target.value) }
+            className="bg-zinc-800 border-2 border-amber-500 p-4 w-full"
           >
             {columnFilterList.map((filter) => (
-              <option key={ filter } value={ filter }>
+              <option
+                key={ filter }
+                value={ filter }
+                className="bg-zinc-800"
+              >
                 {filter}
               </option>
             ))}
@@ -84,10 +99,26 @@ export default function FilterPlanets() {
             data-testid="comparison-filter"
             value={ comparisonFilter }
             onChange={ (event) => setComparisonFilter(event.target.value) }
+            className="bg-zinc-800 border-2 border-amber-500 p-4 w-full"
           >
-            <option value="maior que">maior que</option>
-            <option value="menor que">menor que</option>
-            <option value="igual a">igual a</option>
+            <option
+              value="maior que"
+              className="bg-zinc-800"
+            >
+              maior que
+            </option>
+            <option
+              value="menor que"
+              className="bg-zinc-800"
+            >
+              menor que
+            </option>
+            <option
+              value="igual a"
+              className="bg-zinc-800"
+            >
+              igual a
+            </option>
           </select>
         </label>
 
@@ -98,6 +129,8 @@ export default function FilterPlanets() {
             data-testid="value-filter"
             value={ valueFilter }
             onChange={ (event) => setValueFilter(event.target.value) }
+            className="bg-zinc-800 border-2 border-amber-500
+            p-4 w-full"
           />
         </label>
 
@@ -105,43 +138,54 @@ export default function FilterPlanets() {
           type="submit"
           data-testid="button-filter"
           disabled={ columnFilterList.length === 0 }
+          className="bg-amber-500 text-zinc-900 font-bold uppercase p-4"
         >
           Filtrar
         </button>
       </form>
 
-      {
-        filtersList.length > 0 && (
-          <button
-            type="button"
-            data-testid="button-remove-filters"
-            onClick={ removeAllFilters }
-          >
-            Remover todas filtragens
-          </button>
-        )
-      }
+      <div className="m-10">
+        {
+          filtersList.length > 0 && (
+            <div className="flex justify-center mb-4">
+              <button
+                type="button"
+                data-testid="button-remove-filters"
+                onClick={ removeAllFilters }
+                className="bg-orange-800 text-zinc-100 font-bold uppercase p-4"
+              >
+                Remover todas filtragens
+              </button>
+            </div>
+          )
+        }
 
-      <ul>
-        {filtersList.map((filter) => (
-          <li key={ filter.column } data-testid="filter">
-            <p>
-              {`
+        <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          {filtersList.map((filter) => (
+            <li
+              key={ filter.column }
+              data-testid="filter"
+              className="flex items-center justify-between gap-4 p-4 bg-zinc-800"
+            >
+              <p>
+                {`
                 ${filter.column} 
                 ${filter.comparison} 
                 ${filter.value}
              `}
-            </p>
-            <button
-              data-testid="remove-filter-btn"
-              type="button"
-              onClick={ () => removeFilter(filter.column) }
-            >
-              Remover
-            </button>
-          </li>
-        ))}
-      </ul>
-    </>
+              </p>
+              <button
+                data-testid="remove-filter-btn"
+                type="button"
+                onClick={ () => removeFilter(filter.column) }
+                className="bg-orange-800 text-zinc-100 font-bold uppercase p-4"
+              >
+                <ImCross />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

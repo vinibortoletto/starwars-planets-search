@@ -23,8 +23,11 @@ function App() {
 
             <div className="content">
               <SearchPlanets />
-              <FilterPlanets />
-              <SortPlanets />
+              <div className="flex">
+                <FilterPlanets />
+                <SortPlanets />
+              </div>
+
               <Table />
             </div>
           </main>
