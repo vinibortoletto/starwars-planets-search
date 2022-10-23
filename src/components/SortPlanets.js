@@ -13,7 +13,8 @@ export default function SortPlanets() {
   const { filteredPlanetsList, setFilteredPlanetsList } = useContext(PlanetsContext);
   const [order, setOrder] = useState({ column: 'population', sort: 'ASC' });
 
-  const sortTable = () => {
+  const sortTable = (event) => {
+    event.preventDefault();
     const newFilteredPlanetsList = filteredPlanetsList
       .sort((a, b) => {
         if (order.sort === 'ASC') return a[order.column] - b[order.column];
@@ -36,7 +37,6 @@ export default function SortPlanets() {
       <form
         onSubmit={ sortTable }
         className="flex flex-col flex-wrap gap-4 md:flex-row justify-center"
-        // className="flex flex-col gap-4"
       >
         <label htmlFor="column-sort">
           <select

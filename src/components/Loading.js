@@ -5,7 +5,10 @@ import starwarsLogo from '../assets/starwars-logo.png';
 
 export default function Loading() {
   return (
-    <div className="h-screen relative max-w-md mx-auto">
+    <div
+      data-testid="loading"
+      className="h-screen relative max-w-md mx-auto"
+    >
       <img
         src={ circle }
         alt="a line forming a circle"

@@ -23,7 +23,7 @@ describe("App", () => {
       </PlanetsProvider>
     );
 
-    await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+    await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
   });
 
   it("1. should call api on mount", async () => {
