@@ -28,7 +28,7 @@ function App() {
 
               <div className="content">
                 <SearchPlanets />
-                <div className="lg:flex">
+                <div className="lg:flex lg:justify-center">
                   <FilterPlanets />
                   <SortPlanets />
                 </div>

@@ -62,7 +62,7 @@ export default function FilterPlanets() {
   };
 
   return (
-    <div className="mb-10">
+    <div className="mb-10 max-w-3xl">
       <form
         onSubmit={ handleSubmit }
         className="flex flex-col flex-wrap gap-4 md:flex-row justify-center"
@@ -144,7 +144,7 @@ export default function FilterPlanets() {
         </button>
       </form>
 
-      <div className="m-10">
+      <div className="my-10">
         {
           filtersList.length > 0 && (
             <div className="flex justify-center mb-4">
