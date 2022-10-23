@@ -26,7 +26,7 @@ export function PlanetsProvider({ children }) {
 
   const filterPlanetsByName = useCallback(({ target: { value } }) => {
     const newFilteredPlanetsList = planetsList
-      .filter((planet) => planet.name.toLowerCase().includes(value));
+      .filter((planet) => planet.name.toLowerCase().includes(value.toLowerCase()));
 
     setFilteredPlanetsList(newFilteredPlanetsList);
     setNameFilter(value);
