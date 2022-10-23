@@ -6,9 +6,7 @@ body {
   background-size: cover;
 }
 
-.content {
-  animation: fadein 0.3s linear;
-}
+.content { animation: fadein 0.3s linear; }
 
 .circle, .circle-reverse {
   left: 50%;
@@ -17,20 +15,20 @@ body {
   translate: -50% -50%;
 }
 
-.circle {
-  animation: spin 1s linear infinite;
-}
+.circle { animation: spin 1s linear infinite; }
 
 @keyframes spin {
+
   from { transform: rotate(0deg); }
+
   to { transform: rotate(360deg); }
 }
 
 @keyframes fadein {
+
   from { opacity: 0; }
+
   to { opacity: 1; }
 }
 
-.circle-reverse {
-  animation: spin 1s linear infinite reverse;
-}
+.circle-reverse { animation: spin 1s linear infinite reverse; }
