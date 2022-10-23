@@ -9,6 +9,7 @@ import './App.css';
 import SortPlanets from './components/SortPlanets';
 import Loading from './components/Loading';
 import Logo from './components/Logo';
+import Footer from './components/Footer';
 
 function App() {
   const { isLoading } = useContext(PlanetsContext);
@@ -18,19 +19,26 @@ function App() {
       {isLoading
         ? <Loading />
         : (
-          <main>
-            <Logo />
+          <>
+            <header>
+              <Logo />
 
-            <div className="content">
-              <SearchPlanets />
-              <div className="flex">
-                <FilterPlanets />
-                <SortPlanets />
+            </header>
+            <main>
+
+              <div className="content">
+                <SearchPlanets />
+                <div className="lg:flex">
+                  <FilterPlanets />
+                  <SortPlanets />
+                </div>
+
+                <Table />
               </div>
+            </main>
 
-              <Table />
-            </div>
-          </main>
+            <Footer />
+          </>
         )}
     </div>
   );
